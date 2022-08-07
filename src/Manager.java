@@ -5,7 +5,6 @@ public class Manager extends Main {
     static HashMap<Integer, Task> taskList = new HashMap<>();
     static HashMap<Integer, EpicTask> epicList = new HashMap<>();
     static HashMap<Integer, SubTask> subTaskList = new HashMap<>();
-    static int id = 0;
 
     public static void addTask(Task task) {
         id++;
@@ -68,9 +67,8 @@ public class Manager extends Main {
         Task result = null;
 
         for (Map.Entry<Integer, Task> entry : taskList.entrySet()) {
-            Integer taskId = entry.getKey();
             Task task = entry.getValue();
-            if (taskId == id) {
+            if (task.id == id) {
                 result = task;
             }
         }
@@ -81,9 +79,8 @@ public class Manager extends Main {
         EpicTask result = null;
 
         for (Map.Entry<Integer, EpicTask> entry : epicList.entrySet()) {
-            Integer taskId = entry.getKey();
             EpicTask task = entry.getValue();
-            if (taskId == id) {
+            if (task.id == id) {
                 result = task;
             }
         }
@@ -94,12 +91,24 @@ public class Manager extends Main {
         SubTask result = null;
 
         for (Map.Entry<Integer, SubTask> entry : subTaskList.entrySet()) {
-            Integer taskId = entry.getKey();
             SubTask task = entry.getValue();
-            if (taskId == id) {
+            if (task.id == id) {
                 result = task;
             }
         }
         return result;
+    }
+
+
+    public static void updateTask(Task task) {
+        taskList.put(task.id, task);
+    }
+
+    public static void updateEpic(EpicTask epicTask) {
+        taskList.put(epicTask.id, epicTask);
+    }
+
+    public static void updateSubtask(SubTask subTask) {
+        taskList.put(subTask.id, subTask);
     }
 }

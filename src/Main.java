@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 public class Main {
+    static int id = 0;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         printMenu();
@@ -9,14 +11,16 @@ public class Main {
         while (true) {
             switch (scanner.nextInt()) {
                 case 0 -> Manager.printTasks();
-                case 1 -> Manager.addTask(new Task("Сходить в зал", "купить абонемент и сходить в зал", "NEW"));
-                case 2 -> Manager.addEpicTask(new EpicTask("Это эпик", "у него могут быть подзадачи", "NEW"));
-                case 3 -> Manager.addSubTaskToEpic(new SubTask("Это Подзадача", "их можно удалять", "NEW", 1));
+                case 1 -> Manager.addTask(new Task("Сходить в зал", "купить абонемент и сходить в зал", "NEW", id + 1));
+                case 2 -> Manager.addEpicTask(new EpicTask("Это эпик", "у него могут быть подзадачи", "NEW", id + 1));
+                case 3 -> Manager.addSubTaskToEpic(new SubTask("Это Подзадача", "их можно удалять", "NEW", 1, id + 1));
                 case 4 -> Manager.printEpicTasks();
                 case 5 -> Manager.printSubTasks();
                 case 6 -> Manager.removeTasks();
                 case 7 -> Manager.removeEpicTasks();
                 case 8 -> Manager.removeSubTasks();
+                case 9 ->
+                        Manager.updateTask(new Task("Сходить в зал и покупаться", "купить абонемент и сходить в зал", "NEW", 1));
                 default -> System.out.println("Такой команды нету");
             }
             printMenu();
