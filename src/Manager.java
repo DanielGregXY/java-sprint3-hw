@@ -7,31 +7,19 @@ public class Manager extends Main {
     static HashMap<Integer, SubTask> subTaskList = new HashMap<>();
     static int id = 0;
 
-    public static void addTask() {
-        String taskName = "Переезд";
-        String taskDescription = "собрать вещи";
-
-        Task task = new Task(taskName, taskDescription, "NEW");
+    public static void addTask(Task task) {
         id++;
         taskList.put(id, task);
     }
 
-    public static void addEpicTask() {
-        String taskName = "Епик таск";
-        String taskDescription = "это точно эпик";
-
-        EpicTask task = new EpicTask(taskName, taskDescription, "NEW");
+    public static void addEpicTask(EpicTask epicTask) {
         id++;
-        epicList.put(id, task);
+        epicList.put(id, epicTask);
     }
 
-    public static void addSubTaskToEpic(int epicId) {
-        String subTaskName = "подзадача купить морковку";
-        String subTaskDescription = "дойти до прилавка с морковкой";
-
-        SubTask task = new SubTask(subTaskName, subTaskDescription, "NEW", epicId);
+    public static void addSubTaskToEpic(SubTask subTask) {
         id++;
-        subTaskList.put(id, task);
+        subTaskList.put(id, subTask);
     }
 
     public static void printTasks() {

@@ -9,9 +9,9 @@ public class Main {
         while (true) {
             switch (scanner.nextInt()) {
                 case 0 -> Manager.printTasks();
-                case 1 -> Manager.addTask();
-                case 2 -> Manager.addEpicTask();
-                case 3 -> Manager.addSubTaskToEpic(1);
+                case 1 -> Manager.addTask(new Task("Сходить в зал", "купить абонемент и сходить в зал", "NEW"));
+                case 2 -> Manager.addEpicTask(new EpicTask("Это эпик", "у него могут быть подзадачи", "NEW"));
+                case 3 -> Manager.addSubTaskToEpic(new SubTask("Это Подзадача", "их можно удалять", "NEW", 1));
                 case 4 -> Manager.printEpicTasks();
                 case 5 -> Manager.printSubTasks();
                 case 6 -> Manager.removeTasks();
