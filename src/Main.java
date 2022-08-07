@@ -1,21 +1,22 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> taskList = new ArrayList<>();
-        ArrayList<Task> removedTasks = new ArrayList<>();
         printMenu();
 
         //noinspection InfiniteLoopStatement
         while (true) {
             switch (scanner.nextInt()) {
-                case 0 -> printAllTasks(taskList);
-                case 1 -> addTask(taskList);
-                case 2 -> removeTaskByName(taskList, removedTasks);
-                case 3 -> printDeletedTasks(removedTasks);
+                case 0 -> Manager.printTasks();
+                case 1 -> Manager.addTask();
+                case 2 -> Manager.addEpicTask();
+                case 3 -> Manager.addSubTaskToEpic(1);
+                case 4 -> Manager.printEpicTasks();
+                case 5 -> Manager.printSubTasks();
+                case 6 -> Manager.removeTasks();
+                case 7 -> Manager.removeEpicTasks();
+                case 8 -> Manager.removeSubTasks();
                 default -> System.out.println("Такой команды нету");
             }
             printMenu();
@@ -26,54 +27,14 @@ public class Main {
 
 
     public static void printMenu() {
-        System.out.println("\n0 - Показать все задачи");
+        System.out.println("\n0 - Показать задачи");
         System.out.println("1 - Добавить задачу");
-        System.out.println("2 - Удалить задачу по названию");
-        System.out.println("3 - Показать список удаленных задач");
-    }
-
-    public static void addTask(ArrayList<Task> taskList) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Введите название");
-        String taskName = scanner.nextLine();
-
-        System.out.println("Введите описание");
-        String taskDescription = scanner.nextLine();
-
-        Task task = new Task(taskName, taskDescription, "NEW", taskList.size() + 1);
-        taskList.add(task);
-    }
-
-    public static void printAllTasks(ArrayList<Task> taskList) {
-        if (taskList.size() == 0) {
-            System.out.println("Список задач пуст");
-        }
-
-        for (Task task : taskList) {
-            System.out.println("Задача " + task.id + ": " + task.name + "\nОписание: " + task.description);
-        }
-    }
-
-    public static void printDeletedTasks(ArrayList<Task> removedTasks) {
-
-        for (Task task : removedTasks) {
-            System.out.println("Удаленные задачи: ");
-            System.out.println("Задача " + task.id + ": " + task.name + "\nОписание: " + task.description);
-        }
-    }
-
-    public static void removeTaskByName(ArrayList<Task> taskList, ArrayList<Task> removedTasks) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Введите название задачи");
-        String taskName = scanner.nextLine();
-
-        for (Task task : taskList) {
-            if (task.name.equals(taskName)) {
-                taskList.remove(task);
-                removedTasks.add(task);
-            }
-        }
+        System.out.println("2 - Добавить большую задачу");
+        System.out.println("3 - Добавить подзадачу к эпику по айди");
+        System.out.println("4 - Показать Эпики");
+        System.out.println("5 - Показать подзадачи");
+        System.out.println("6 - Удалить все задачи");
+        System.out.println("7 - Удалить все эпики");
+        System.out.println("8 - Удалить все подзадачи");
     }
 }
