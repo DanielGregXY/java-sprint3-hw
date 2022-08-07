@@ -21,6 +21,7 @@ public class Main {
                 case 8 -> Manager.removeSubTasks();
                 case 9 ->
                         Manager.updateTask(new Task("Сходить в зал и покупаться", "купить абонемент и сходить в зал", "NEW", 1));
+                case 10 -> Manager.removeTaskById(1);
                 default -> System.out.println("Такой команды нету");
             }
             printMenu();

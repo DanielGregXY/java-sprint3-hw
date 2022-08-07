@@ -111,4 +111,37 @@ public class Manager extends Main {
     public static void updateSubtask(SubTask subTask) {
         taskList.put(subTask.id, subTask);
     }
+
+    public static void removeEpicById(int id) {
+
+        for (Map.Entry<Integer, EpicTask> entry : epicList.entrySet()) {
+            int idInMap = entry.getKey();
+            EpicTask task = entry.getValue();
+            if (task.id == id) {
+                epicList.remove(idInMap);
+            }
+        }
+    }
+
+    public static void removeTaskById(int id) {
+
+        for (Map.Entry<Integer, Task> entry : taskList.entrySet()) {
+            int idInMap = entry.getKey();
+            Task task = entry.getValue();
+            if (task.id == id) {
+                taskList.remove(idInMap);
+            }
+        }
+    }
+
+    public static void removeSubTaskById(int id) {
+
+        for (Map.Entry<Integer, SubTask> entry : subTaskList.entrySet()) {
+            int idInMap = entry.getKey();
+            SubTask task = entry.getValue();
+            if (task.id == id) {
+                subTaskList.remove(idInMap);
+            }
+        }
+    }
 }
