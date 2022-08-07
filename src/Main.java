@@ -12,7 +12,7 @@ public class Main {
             switch (scanner.nextInt()) {
                 case 0 -> Manager.printTasks();
                 case 1 -> Manager.addTask(new Task("Сходить в зал", "купить абонемент и сходить в зал", "NEW", id + 1));
-                case 2 -> Manager.addEpicTask(new EpicTask("Это эпик", "у него могут быть подзадачи", "NEW", id + 1));
+                case 2 -> Manager.addEpicTask(new EpicTask("Это эпик", "у него могут быть подзадачи", id + 1));
                 case 3 -> Manager.addSubTaskToEpic(new SubTask("Это Подзадача", "их можно удалять", "NEW", 1, id + 1));
                 case 4 -> Manager.printEpicTasks();
                 case 5 -> Manager.printSubTasks();
@@ -22,6 +22,8 @@ public class Main {
                 case 9 ->
                         Manager.updateTask(new Task("Сходить в зал и покупаться", "купить абонемент и сходить в зал", "NEW", 1));
                 case 10 -> Manager.removeTaskById(1);
+                case 11 -> Manager.getEpicSubTasks(1);
+                case 12 -> Manager.updateSubtask(new SubTask("Это Подзадача", "их можно удалять", "DONE", 1, 2));
                 default -> System.out.println("Такой команды нету");
             }
             printMenu();

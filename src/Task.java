@@ -13,5 +13,6 @@ public class Task {
         this.status = status;
         this.id = id;
     }
+
 }
 

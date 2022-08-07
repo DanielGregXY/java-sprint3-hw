@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Manager extends Main {
     static HashMap<Integer, Task> taskList = new HashMap<>();
@@ -17,6 +19,7 @@ public class Manager extends Main {
     }
 
     public static void addSubTaskToEpic(SubTask subTask) {
+        epicList.get(subTask.epicId).status = "IN_PROGRESS";
         id++;
         subTaskList.put(id, subTask);
     }
@@ -105,11 +108,26 @@ public class Manager extends Main {
     }
 
     public static void updateEpic(EpicTask epicTask) {
-        taskList.put(epicTask.id, epicTask);
+        epicList.put(epicTask.id, epicTask);
     }
 
     public static void updateSubtask(SubTask subTask) {
-        taskList.put(subTask.id, subTask);
+        subTaskList.put(subTask.id, subTask);
+
+        ArrayList<SubTask> epicSubTask = getEpicSubTasks(subTask.epicId);
+
+        int doneTask = 0;
+
+        for (SubTask task : epicSubTask) {
+            if (Objects.equals(task.status, "DONE")) {
+                doneTask++;
+            }
+        }
+
+        if (doneTask == epicSubTask.size()) {
+            epicList.get(subTask.epicId).status = "DONE";
+        }
+
     }
 
     public static void removeEpicById(int id) {
@@ -144,4 +162,19 @@ public class Manager extends Main {
             }
         }
     }
+
+    public static ArrayList<SubTask> getEpicSubTasks(int epicId) {
+        ArrayList<SubTask> EpicSubTasks = new ArrayList<>();
+
+        for (Map.Entry<Integer, SubTask> entry : subTaskList.entrySet()) {
+            int idInMap = entry.getKey();
+            SubTask task = entry.getValue();
+            if (task.epicId == epicId) {
+                EpicSubTasks.add(task);
+            }
+        }
+
+        return EpicSubTasks;
+    }
+
 }
