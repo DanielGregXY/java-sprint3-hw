@@ -3,7 +3,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Manager extends Main {
+public class Manager {
+    static int epicId = 0;
+    static int subTasksId = 0;
+    static int tasksId = 0;
     static HashMap<Integer, Task> taskList = new HashMap<>();
     static HashMap<Integer, EpicTask> epicList = new HashMap<>();
     static HashMap<Integer, SubTask> subTaskList = new HashMap<>();
@@ -20,7 +23,7 @@ public class Manager extends Main {
 
     public static void addSubTaskToEpic(SubTask subTask) {
         if (!Objects.equals(subTask.getStatus(), "NEW")) {
-            epicList.get(subTask.getEpicId()).status = "IN_PROGRESS";
+            epicList.get(subTask.getEpicId()).setStatus("IN_PROGRESS");
         }
         subTasksId++;
         subTaskList.put(subTasksId, subTask);

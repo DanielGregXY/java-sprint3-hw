@@ -1,7 +1,7 @@
 public class Task {
     private String name;
     private String description;
-    public String status; //NEW | IN_PROGRESS | DONE
+    private String status; //NEW | IN_PROGRESS | DONE
     private int id;
 
     public Task(String name,
