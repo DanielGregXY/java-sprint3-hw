@@ -1,27 +1,40 @@
+package manager.task;
+
+import constructor.EpicTask;
+import constructor.SubTask;
+import constructor.Task;
+import manager.Managers;
+import manager.history.HistoryManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Manager {
-    static int epicId = 0;
-    static int subTasksId = 0;
-    static int tasksId = 0;
-    static HashMap<Integer, Task> taskList = new HashMap<>();
-    static HashMap<Integer, EpicTask> epicList = new HashMap<>();
-    static HashMap<Integer, SubTask> subTaskList = new HashMap<>();
+public class InMemoryTaskManager implements TaskManager {
+    public int epicId = 0;
+    public int subTasksId = 0;
+    int tasksId = 0;
+    HashMap<Integer, Task> taskList = new HashMap<>();
+    HashMap<Integer, EpicTask> epicList = new HashMap<>();
+    HashMap<Integer, SubTask> subTaskList = new HashMap<>();
 
-    public static void addTask(Task task) {
+    HistoryManager historyManager = Managers.getDefaultHistory();
+
+    @Override
+    public void addTask(Task task) {
         tasksId++;
         taskList.put(tasksId, task);
     }
 
-    public static void addEpicTask(EpicTask epicTask) {
+    @Override
+    public void addEpicTask(EpicTask epicTask) {
         epicId++;
         epicList.put(epicId, epicTask);
     }
 
-    public static void addSubTaskToEpic(SubTask subTask) {
+    @Override
+    public void addSubTaskToEpic(SubTask subTask) {
         if (!Objects.equals(subTask.getStatus(), "NEW")) {
             epicList.get(subTask.getEpicId()).setStatus("IN_PROGRESS");
         }
@@ -29,7 +42,8 @@ public class Manager {
         subTaskList.put(subTasksId, subTask);
     }
 
-    public static void printTasks() {
+    @Override
+    public void printTasks() {
 
         for (Map.Entry<Integer, Task> entry : taskList.entrySet()) {
             Integer id = entry.getKey();
@@ -39,7 +53,8 @@ public class Manager {
 
     }
 
-    public static void printEpicTasks() {
+    @Override
+    public void printEpicTasks() {
 
         for (Map.Entry<Integer, EpicTask> taskEntry : epicList.entrySet()) {
             Integer taskId = taskEntry.getKey();
@@ -50,7 +65,8 @@ public class Manager {
         }
     }
 
-    public static void printSubTasks() {
+    @Override
+    public void printSubTasks() {
 
         for (Map.Entry<Integer, SubTask> epicEntry : subTaskList.entrySet()) {
             SubTask subTask = epicEntry.getValue();
@@ -58,20 +74,23 @@ public class Manager {
         }
     }
 
-
-    public static void removeTasks() {
+    @Override
+    public void removeTasks() {
         taskList.clear();
     }
 
-    public static void removeEpicTasks() {
+    @Override
+    public void removeEpicTasks() {
         epicList.clear();
     }
 
-    public static void removeSubTasks() {
+    @Override
+    public void removeSubTasks() {
         subTaskList.clear();
     }
 
-    public static Task getTaskById(int id) {
+    @Override
+    public Task getTaskById(int id) {
         Task result = null;
 
         for (Map.Entry<Integer, Task> entry : taskList.entrySet()) {
@@ -80,10 +99,13 @@ public class Manager {
                 result = task;
             }
         }
+
+        historyManager.setHistory(result);
         return result;
     }
 
-    public static EpicTask getEpicById(int id) {
+    @Override
+    public EpicTask getEpicById(int id) {
         EpicTask result = null;
 
         for (Map.Entry<Integer, EpicTask> entry : epicList.entrySet()) {
@@ -92,10 +114,13 @@ public class Manager {
                 result = task;
             }
         }
+
+        historyManager.setHistory(result);
         return result;
     }
 
-    public static SubTask getSubTaskById(int id) {
+    @Override
+    public SubTask getSubTaskById(int id) {
         SubTask result = null;
 
         for (Map.Entry<Integer, SubTask> entry : subTaskList.entrySet()) {
@@ -104,19 +129,23 @@ public class Manager {
                 result = task;
             }
         }
+
+        historyManager.setHistory(result);
         return result;
     }
 
-
-    public static void updateTask(Task task) {
+    @Override
+    public void updateTask(Task task) {
         taskList.put(task.getId(), task);
     }
 
-    public static void updateEpic(EpicTask epicTask) {
+    @Override
+    public void updateEpic(EpicTask epicTask) {
         epicList.put(epicTask.getId(), epicTask);
     }
 
-    public static void updateSubtask(SubTask subTask) {
+    @Override
+    public void updateSubtask(SubTask subTask) {
         subTaskList.put(subTask.getId(), subTask);
 
         ArrayList<SubTask> epicSubTask = getEpicSubTasks(subTask.getEpicId());
@@ -135,7 +164,8 @@ public class Manager {
 
     }
 
-    public static void removeTaskById(int id) {
+    @Override
+    public void removeTaskById(int id) {
         int removeTaskId = 0;
 
         for (Map.Entry<Integer, Task> entry : taskList.entrySet()) {
@@ -149,7 +179,8 @@ public class Manager {
         taskList.remove(removeTaskId);
     }
 
-    public static void removeEpicById(int id) {
+    @Override
+    public void removeEpicById(int id) {
         int removeTaskId = 0;
 
         for (Map.Entry<Integer, EpicTask> entry : epicList.entrySet()) {
@@ -163,8 +194,8 @@ public class Manager {
         epicList.remove(removeTaskId);
     }
 
-
-    public static void removeSubTaskById(int id) {
+    @Override
+    public void removeSubTaskById(int id) {
         int removeTaskId = 0;
 
         for (Map.Entry<Integer, SubTask> entry : subTaskList.entrySet()) {
@@ -178,7 +209,8 @@ public class Manager {
         subTaskList.remove(removeTaskId);
     }
 
-    public static ArrayList<SubTask> getEpicSubTasks(int epicId) {
+    @Override
+    public ArrayList<SubTask> getEpicSubTasks(int epicId) {
         ArrayList<SubTask> EpicSubTasks = new ArrayList<>();
 
         for (Map.Entry<Integer, SubTask> entry : subTaskList.entrySet()) {

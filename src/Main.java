@@ -1,27 +1,46 @@
+import constructor.EpicTask;
+import constructor.SubTask;
+import constructor.status.Status;
+import manager.Managers;
+import manager.history.HistoryManager;
+import manager.task.InMemoryTaskManager;
+import manager.task.TaskManager;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        Manager.addEpicTask(new EpicTask("Сьездить в отпуск", "На бали первая остановка", Manager.epicId + 1));
-        Manager.addSubTaskToEpic(new SubTask("Купить снаряжение", "Для дайвинга", "NEW", 1, Manager.subTasksId + 1));
-        Manager.addSubTaskToEpic(new SubTask("Сьесть омара", "в ресторане", "NEW", 1, Manager.subTasksId + 1));
+        TaskManager task = Managers.getDefaultTask();
+        HistoryManager history = Managers.getDefaultHistory();
+        InMemoryTaskManager taskManager = (InMemoryTaskManager) task;
 
-        Manager.addEpicTask(new EpicTask("Сходить в магазин", "купить яиц", Manager.epicId + 1));
-        Manager.addSubTaskToEpic(new SubTask("Заглянуть на базар", "Купить свинины", "NEW", 2, Manager.subTasksId + 1));
+        taskManager.addEpicTask(new EpicTask("Сьездить в отпуск", "На бали первая остановка", taskManager.epicId + 1));
+        taskManager.addSubTaskToEpic(new SubTask("Купить снаряжение", "Для дайвинга", Status.NEW, 1, taskManager.subTasksId + 1));
+        taskManager.addSubTaskToEpic(new SubTask("Сьесть омара", "в ресторане", Status.NEW, 1, taskManager.subTasksId + 1));
 
-        Manager.printEpicTasks();
-        Manager.printTasks();
-        Manager.printSubTasks();
+        taskManager.addEpicTask(new EpicTask("Сходить в магазин", "купить яиц", taskManager.epicId + 1));
+        taskManager.addSubTaskToEpic(new SubTask("Заглянуть на базар", "Купить свинины", Status.NEW, 2, taskManager.subTasksId + 1));
 
-        Manager.updateSubtask(new SubTask("Это Подзадача", "их можно удалять", "DONE", 1, 1));
-        Manager.updateSubtask(new SubTask("Это Подзадача", "их можно удалять", "DONE", 1, 2));
+        taskManager.printEpicTasks();
+        taskManager.printTasks();
+        taskManager.printSubTasks();
 
-        Manager.removeSubTaskById(1);
-        Manager.removeEpicById(2);
+        taskManager.updateSubtask(new SubTask("Это Подзадача", "их можно удалять", Status.DONE, 1, 1));
+        taskManager.updateSubtask(new SubTask("Это Подзадача", "их можно удалять", Status.DONE, 1, 2));
+        history.getHistory();
 
-        Manager.printEpicTasks();
-        Manager.printTasks();
-        Manager.printSubTasks();
+        taskManager.removeSubTaskById(1);
+        taskManager.removeEpicById(2);
+
+        taskManager.printEpicTasks();
+        taskManager.printTasks();
+        taskManager.printSubTasks();
+
+        taskManager.getEpicById(1);
+        history.getHistory();
+        taskManager.getSubTaskById(2);
+
+        history.getHistory();
 
     }
 }

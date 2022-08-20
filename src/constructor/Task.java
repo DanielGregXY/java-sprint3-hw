@@ -1,3 +1,7 @@
+package constructor;
+
+import constructor.status.Status;
+
 public class Task {
     private String name;
     private String description;
@@ -6,11 +10,11 @@ public class Task {
 
     public Task(String name,
                 String description,
-                String status,
+                Status status,
                 int id) {
         this.name = name;
         this.description = description;
-        this.status = status;
+        this.status = status.toString();
         this.id = id;
     }
 
