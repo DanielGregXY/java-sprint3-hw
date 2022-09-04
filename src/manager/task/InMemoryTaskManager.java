@@ -12,9 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class InMemoryTaskManager implements TaskManager {
-    public int epicId = 0;
-    public int subTasksId = 0;
-    int tasksId = 0;
+    public int taskId = 0;
     HashMap<Integer, Task> taskList = new HashMap<>();
     HashMap<Integer, EpicTask> epicList = new HashMap<>();
     HashMap<Integer, SubTask> subTaskList = new HashMap<>();
@@ -23,14 +21,14 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addTask(Task task) {
-        tasksId++;
-        taskList.put(tasksId, task);
+        taskId++;
+        taskList.put(taskId, task);
     }
 
     @Override
     public void addEpicTask(EpicTask epicTask) {
-        epicId++;
-        epicList.put(epicId, epicTask);
+        taskId++;
+        epicList.put(taskId, epicTask);
     }
 
     @Override
@@ -38,8 +36,8 @@ public class InMemoryTaskManager implements TaskManager {
         if (!Objects.equals(subTask.getStatus(), "NEW")) {
             epicList.get(subTask.getEpicId()).setStatus("IN_PROGRESS");
         }
-        subTasksId++;
-        subTaskList.put(subTasksId, subTask);
+        taskId++;
+        subTaskList.put(taskId, subTask);
     }
 
     @Override
@@ -177,6 +175,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         taskList.remove(removeTaskId);
+        historyManager.remove(removeTaskId);
     }
 
     @Override
@@ -192,6 +191,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         epicList.remove(removeTaskId);
+        historyManager.remove(removeTaskId);
     }
 
     @Override
@@ -207,6 +207,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
         subTaskList.remove(removeTaskId);
+        historyManager.remove(removeTaskId);
     }
 
     @Override
