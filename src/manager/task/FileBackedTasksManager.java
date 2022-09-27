@@ -8,9 +8,7 @@ import manager.Managers;
 import manager.history.HistoryManager;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,7 +25,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         TaskManager task = Managers.getDefaultTask();
 
         InMemoryTaskManager taskManager = (InMemoryTaskManager) task;
-
+//=================================================================================\\
         taskManager.addTask(new Task(" упить продукты", "сходить в магазин", Status.NEW, 1));
         taskManager.addTask(new Task("—ъездить в барбер", "завести машину", Status.IN_PROGRESS, 2));
         taskManager.addEpicTask(new EpicTask("—ходить в душ", "срочно", 3));
@@ -73,6 +71,86 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     private final static String PATH = "C:\\Users\\Daniel Greg\\Desktop\\task.csv";
+    //=================================================================================\\
+    @Override
+    public int addTask(Task task) throws IOException {
+        int id = super.addTask(task);
+        save();
+        return id;
+    }
+    @Override
+    public int add(EpicTask epic) throws IOException {
+        int id = super.addEpicTask(epic);
+        save();
+        return id;
+    }
+
+    @Override
+    public int add(SubTask subtask) throws IOException {
+        int id = super.addSubTaskToEpic(subtask);
+        save();
+        return id;
+    }
+
+    @Override
+    public void updateTask(Task task) throws IOException {
+        super.updateTask(task);
+        save();
+    }
+
+    @Override
+    public void updateEpic(EpicTask epicTask) throws IOException {
+        super.updateEpic(epicTask);
+        save();
+
+    }
+
+    @Override
+    public void updateSubtask(SubTask subtask) throws IOException {
+        super.updateSubtask(subtask);
+        save();
+    }
+
+
+    @Override
+    public Task getTaskById(int id) throws IOException {
+        Task task = super.getTaskById(id);
+        save();
+        return task;
+    }
+
+    @Override
+    public EpicTask getEpicById(int id) throws IOException {
+        EpicTask epicTask = super.getEpicById(id);
+        save();
+        return epicTask;
+    }
+
+    @Override
+    public SubTask getSubTaskById(int id) throws IOException {
+        SubTask subtask = super.getSubTaskById(id);
+        save();
+        return subtask;
+    }
+
+    @Override
+    public void removeEpicById(int id) throws IOException {
+        super.removeEpicById(id);
+        save();
+    }
+
+    @Override
+    public void removeSubTaskById(int id) throws IOException {
+        super.removeSubTaskById(id);
+        save();
+    }
+
+    @Override
+    public void removeTaskById(int id) throws IOException {
+        super.removeTaskById(id);
+        save();
+
+    }
 
     //=================================================================================\\
     private static String taskToString(Task task) {
@@ -84,7 +162,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 task.getDescription(),
                 String.valueOf(task instanceof SubTask ? ((SubTask) task).getEpicId() : ""));
     }
-
+    //=================================================================================\\
     private static String allTasksToString() {
 
         StringBuilder builder = new StringBuilder();
@@ -102,7 +180,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         return builder.toString();
     }
 
-
+    //=================================================================================\\
     public static void save() throws IOException {
         try {
             Path path = Path.of(PATH);
@@ -195,7 +273,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         } catch (IOException err) {
             System.out.println(err.getMessage());
         }
-    }
 
+    }
 
 }

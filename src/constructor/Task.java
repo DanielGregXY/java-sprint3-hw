@@ -17,23 +17,23 @@ public class Task {
         this.status = status.toString();
         this.id = id;
     }
-
+    //=================================================================================\\
     public String getName() {
         return name;
     }
-
+    //=================================================================================\\
     public String getDescription() {
         return description;
     }
-
+    //=================================================================================\\
     public int getId() {
         return id;
     }
-
+    //=================================================================================\\
     public String getStatus() {
         return status;
     }
-
+    //=================================================================================\\
     public void setStatus(String status) {
         this.status = status;
     }
