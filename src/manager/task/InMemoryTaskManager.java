@@ -175,7 +175,7 @@ public abstract class InMemoryTaskManager implements TaskManager {
                 doneTask++;
             }
         }
-
+//
         if (doneTask == epicSubTask.size()) {
             epicList.get(subTask.getEpicId()).setStatus("DONE");
         }

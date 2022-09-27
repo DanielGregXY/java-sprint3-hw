@@ -9,7 +9,7 @@ public interface HistoryManager {
     public ArrayList<Task> getHistory();
 
     public void setHistory(Task task);
-
+//
     public void remove(int id);
 
     static String historyToString(HistoryManager manager) {
@@ -21,5 +21,5 @@ public interface HistoryManager {
 
         return sb.toString();
     }
-
+//
 }
