@@ -6,38 +6,53 @@ import constructor.Task;
 import manager.Managers;
 import manager.history.HistoryManager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class InMemoryTaskManager implements TaskManager {
-    public int taskId = 0;
-    HashMap<Integer, Task> taskList = new HashMap<>();
-    HashMap<Integer, EpicTask> epicList = new HashMap<>();
-    HashMap<Integer, SubTask> subTaskList = new HashMap<>();
+import static manager.task.FileBackedTasksManager.save;
 
-    HistoryManager historyManager = Managers.getDefaultHistory();
+public class InMemoryTaskManager implements TaskManager {
+    public static int taskId = 0;
+    static HashMap<Integer, Task> taskList = new HashMap<>();
+    static HashMap<Integer, EpicTask> epicList = new HashMap<>();
+    static HashMap<Integer, SubTask> subTaskList = new HashMap<>();
+
+    static HistoryManager historyManager = Managers.getDefaultHistory();
+
+
+    public static int getTaskIdc() {
+        return taskId;
+    }
+
+    public static void setTaskIdc(int taskId) {
+        InMemoryTaskManager.taskId = taskId;
+    }
 
     @Override
-    public void addTask(Task task) {
+    public void addTask(Task task) throws IOException {
         taskId++;
         taskList.put(taskId, task);
+        save();
     }
 
     @Override
-    public void addEpicTask(EpicTask epicTask) {
+    public void addEpicTask(EpicTask epicTask) throws IOException {
         taskId++;
         epicList.put(taskId, epicTask);
+        save();
     }
 
     @Override
-    public void addSubTaskToEpic(SubTask subTask) {
+    public void addSubTaskToEpic(SubTask subTask) throws IOException {
         if (!Objects.equals(subTask.getStatus(), "NEW")) {
             epicList.get(subTask.getEpicId()).setStatus("IN_PROGRESS");
         }
         taskId++;
         subTaskList.put(taskId, subTask);
+        save();
     }
 
     @Override
@@ -46,7 +61,7 @@ public class InMemoryTaskManager implements TaskManager {
         for (Map.Entry<Integer, Task> entry : taskList.entrySet()) {
             Integer id = entry.getKey();
             Task task = entry.getValue();
-            System.out.println("Задача " + id + ": " + task.getName() + "\nОписание: " + task.getDescription());
+            System.out.println("������ " + id + ": " + task.getName() + "\n��������: " + task.getDescription());
         }
 
     }
@@ -58,7 +73,7 @@ public class InMemoryTaskManager implements TaskManager {
             Integer taskId = taskEntry.getKey();
             EpicTask task = taskEntry.getValue();
 
-            System.out.println("Эпик " + taskId + ": " + task.getName() + "\nОписание: " + task.getDescription());
+            System.out.println("���� " + taskId + ": " + task.getName() + "\n��������: " + task.getDescription());
 
         }
     }
@@ -68,7 +83,7 @@ public class InMemoryTaskManager implements TaskManager {
 
         for (Map.Entry<Integer, SubTask> epicEntry : subTaskList.entrySet()) {
             SubTask subTask = epicEntry.getValue();
-            System.out.println("\tПодзадача эпика " + subTask.getEpicId() + ": " + subTask.getName() + "\n\tОписание: " + subTask.getDescription());
+            System.out.println("\t��������� ����� " + subTask.getEpicId() + ": " + subTask.getName() + "\n\t��������: " + subTask.getDescription());
         }
     }
 

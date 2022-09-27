@@ -3,10 +3,10 @@ package constructor;
 import constructor.status.Status;
 
 public class Task {
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
     private String status; //NEW | IN_PROGRESS | DONE
-    private int id;
+    private final int id;
 
     public Task(String name,
                 String description,

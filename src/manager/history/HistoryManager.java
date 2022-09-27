@@ -12,5 +12,14 @@ public interface HistoryManager {
 
     public void remove(int id);
 
+    static String historyToString(HistoryManager manager) {
+        StringBuilder sb = new StringBuilder();
+
+        for (Task task : manager.getHistory()) {
+            sb.append(task.getId()).append(",");
+        }
+
+        return sb.toString();
+    }
 
 }
